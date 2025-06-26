@@ -3,6 +3,7 @@ import config from './config/server'
 import bodyParser from 'body-parser';
 import sampleWorker from './workers/sampleWorker';
 import { serverAdapter } from './bullborad/sampleBoard';
+import apiRoutes from './routes/index';
 
 const server = async () => {
 
@@ -13,6 +14,7 @@ const server = async () => {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.text());
+    app.use('/api',apiRoutes);
     app.use('/admin/queues', serverAdapter.getRouter());
 
 
