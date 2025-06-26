@@ -14,6 +14,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@bull-board/api": "^4.12.2",
+    "@bull-board/express": "^4.12.2",
     "@types/ioredis": "^4.28.10",
     "body-parser": "^2.2.0",
     "bullmq": "^5.56.0",
