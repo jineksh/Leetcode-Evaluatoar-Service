@@ -3,7 +3,7 @@ import config from './config/server'
 import bodyParser from 'body-parser';
 import { serverAdapter } from './bullborad/sampleBoard';
 import apiRoutes from './routes/index';
-
+import submissionWorker from './workers/submissionWorker';
 
 const server = async () => {
 
@@ -17,10 +17,10 @@ const server = async () => {
     app.use('/api', apiRoutes);
     app.use('/admin/queues', serverAdapter.getRouter());
 
-
     app.listen(PORT, async () => {
         console.log('Evaluator Service is running on port 3000');
         console.log(`BullBoard: http://localhost:${PORT}/admin/queues`);
+        submissionWorker('submissionQueue');
     });
 };
 

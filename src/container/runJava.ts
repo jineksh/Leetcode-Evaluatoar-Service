@@ -2,9 +2,9 @@ import createContainer from "./container";
 import pullImage from "./pullImage";
 import { JAVA_IMAGE } from "../utils/constants";
 import decodeDockerStream from "./dockerHelper";
+import { CodeRunner } from "../utils/constants";
 
-
-export default class runPython {
+export default class runJava implements CodeRunner {
 
 
     async execute(code: string, inputTestCase: string) {

@@ -9,7 +9,6 @@ export default async function createContainer(imageName : string, cmdExec : stri
     const container = docker.createContainer({
         Image: imageName,
         Cmd: cmdExec,
-        name: 'my-c-container',
         Tty: false, // false for parsing stdout/stderr separately
         AttachStdout: true,
         AttachStderr: true,

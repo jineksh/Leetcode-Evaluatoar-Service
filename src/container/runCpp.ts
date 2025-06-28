@@ -1,18 +1,18 @@
 import createContainer from "./container";
 import pullImage from "./pullImage";
-import { JAVA_IMAGE } from "../utils/constants";
+import { CPP_IMAGE } from "../utils/constants";
 import decodeDockerStream from "./dockerHelper";
+import { CodeRunner } from "../utils/constants";
+
+export default class runCpp implements CodeRunner{
 
 
-export default class runPython {
-
-
-    async execute(code: string, inputTestCase: string) {
+    async execute(code: string, inputTestCase : string) {
 
         type buffer = Buffer[];
         const rowcodeBuffer: buffer = [];
 
-        await pullImage(JAVA_IMAGE);
+        await pullImage(CPP_IMAGE);
 
         const runCommand = `
         echo '${code.replace(/'/g, `'\\"`)}' > main.cpp && 
@@ -20,7 +20,7 @@ export default class runPython {
         echo '${inputTestCase.replace(/'/g, `'\\"`)}' | ./a.out
         `;
 
-        const cppContainer = await createContainer(JAVA_IMAGE, [
+        const cppContainer = await createContainer(CPP_IMAGE, [
             '/bin/sh',
             '-c',
             runCommand
@@ -50,7 +50,6 @@ export default class runPython {
         }
         finally {
             await cppContainer.remove();
-
         }
     }
 

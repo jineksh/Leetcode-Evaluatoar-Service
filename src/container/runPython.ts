@@ -2,9 +2,9 @@ import createContainer from "./container";
 import pullImage from "./pullImage";
 import { PYTHON_IMAGE } from "../utils/constants";
 import decodeDockerStream from "./dockerHelper";
+import { CodeRunner } from "../utils/constants";
 
-
-export default class runPython {
+export default class runPython implements CodeRunner {
 
 
     async execute(code: string,inputTestCase : string) {
@@ -47,7 +47,6 @@ export default class runPython {
         }
         finally {
             await pythonContainer.remove();
-
         }
     }
 
