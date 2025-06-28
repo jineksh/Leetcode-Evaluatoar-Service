@@ -1,9 +1,9 @@
 import express from 'express';
 import config from './config/server'
 import bodyParser from 'body-parser';
-import sampleWorker from './workers/sampleWorker';
 import { serverAdapter } from './bullborad/sampleBoard';
 import apiRoutes from './routes/index';
+
 
 const server = async () => {
 
@@ -14,14 +14,13 @@ const server = async () => {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.text());
-    app.use('/api',apiRoutes);
+    app.use('/api', apiRoutes);
     app.use('/admin/queues', serverAdapter.getRouter());
 
 
-    app.listen(PORT,async() => {
+    app.listen(PORT, async () => {
         console.log('Evaluator Service is running on port 3000');
-         console.log(`BullBoard: http://localhost:${PORT}/admin/queues`);
-        await sampleWorker('sampleQueue');
+        console.log(`BullBoard: http://localhost:${PORT}/admin/queues`);
     });
 };
 
