@@ -4,7 +4,7 @@ export const CPP_IMAGE = "gcc:latest"; // docker pull gcc:latest
 
 
 export interface CodeRunner {
-  execute: (data: string,inputTestCase : string) => Promise<any>;
+  execute: (data: string,inputTestCase : string,outputTestcase:string) => Promise<any>;
 }
 
 

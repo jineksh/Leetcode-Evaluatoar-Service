@@ -4,11 +4,12 @@ import { CPP_IMAGE } from "../utils/constants";
 import decodeDockerStream from "./dockerHelper";
 import { CodeRunner } from "../utils/constants";
 
+
 export default class runCpp implements CodeRunner{
 
 
-    async execute(code: string, inputTestCase : string) {
-
+    async execute(code: string, inputTestCase : string,outputTestcase : string) {
+        console.log('outputTestCase',outputTestcase);
         type buffer = Buffer[];
         const rowcodeBuffer: buffer = [];
 
@@ -42,11 +43,19 @@ export default class runCpp implements CodeRunner{
 
         try {
             const result = await this.fetchExecuteStream(logStream, rowcodeBuffer);
-            console.log(result);
-            return { output: result, status: "COMPLETED" };
+            console.log('Result',result)
+            if(outputTestcase?.trim() === (result as string).trim()){
+                const payload =  { output: result as string, status: "COMPLETED" };
+                return payload;
+            }
+            else{
+                const payload = { output: result as string, status: "WRONG ANSWER" };
+               return payload;
+            }
         } catch (error) {
             console.log(error);
-            return { output: error, status: "FAILED" };
+            const payload = { output: error, status: "FAILED" };
+            return payload;
         }
         finally {
             await cppContainer.remove();

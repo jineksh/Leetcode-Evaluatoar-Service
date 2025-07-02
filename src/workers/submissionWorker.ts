@@ -8,8 +8,10 @@ export default async function submissionWorker(name: string) {
 
         console.log('Inside the Worker function');
 
-        if (job.name == 'submissionJob') {
+        if (job.name == 'submissonJob') {
+            console.log(job.data);
             const submissionjob = new submissionJob(job.data);
+            console.log(submissionjob);
             submissionjob.handler(job);
         }
         else {

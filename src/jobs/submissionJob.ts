@@ -2,6 +2,7 @@ import { Job } from "bullmq";
 import IJOB from "../types/job";
 import { submissionPayload } from '../types/submission'
 import executor from "../utils/executor";
+import responseProducer from "../producers/responseProducers";
 
 class submissionJob implements IJOB {
 
@@ -17,9 +18,13 @@ class submissionJob implements IJOB {
         const payload = job.data as submissionPayload;
         try {
             const codeRunner = executor(payload.language);
-            const response = await codeRunner?.execute(payload.code, payload.inputTestCase);
+            const response = await codeRunner?.execute(payload.code, payload.inputTestCase, job.data.outputTestCase);
             console.log(response);
-            return response;
+            const responsePayload = {
+                response,
+                submissonId : job.data.submissonId
+            }
+            responseProducer(responsePayload);
         } catch (error) {
             console.log(error);
             throw error;
